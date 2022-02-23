@@ -1293,7 +1293,7 @@ end
 function RCLootCouncil:OnRaidEnter(arg)
 	-- NOTE: We shouldn't need to call GetML() as it's most likely called on "LOOT_METHOD_CHANGED"
 	-- There's no ML, and lootmethod ~= ML, but we are the group leader
-	if not self.masterLooter and IsRaidLeader() then
+	if not self.masterLooter and (IsRaidLeader() or IsPartyLeader()) then
 		-- We don't need to ask the player for usage, so change loot method to master, and make the player ML
 		if db.usage.leader then
 			SetLootMethod("master", self.playerName)
