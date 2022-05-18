@@ -1208,7 +1208,11 @@ end
 function RCLootCouncil:GetNumberOfDaysFromNow(oldDate)
 	local d, m, y = strsplit("/", oldDate, 3)
 	local sinceEpoch = time({year = "20"..y, month = m, day = d}) -- convert from string to seconds since epoch
-	local diff = date("*t", time() - sinceEpoch) -- get the difference as a table
+	local t = date("*t")	-- Get current date
+	local timeCurrent = time({year = t.year, month = t.month, day = t.day})	--Convert current date to epoch
+	local timeDiff = timeCurrent - sinceEpoch	-- Get difference between dates
+	if timeDiff < 0 then timeDiff = 0 end
+	local diff = date("*t", timeDiff) -- get the difference as a date table
 	-- Convert to number of d/m/y
 	return diff.day - 1, diff.month - 1, diff.year - 1970
 end
